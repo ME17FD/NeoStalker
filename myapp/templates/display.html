@@ -1,0 +1,63 @@
+
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{%static "style_display.css"%}">
+    <link rel="icon" href="{%static "assets/ico.ico"%}">
+    <title>Display</title>
+</head>
+
+<body>
+    <div class="side-bar">
+        <div class="logo"><img src="{%static "assets/kali.svg"%}" alt="" class="logo"></div>
+        <div class="button-container">
+            <a href="{% url 'input' %}"><button >Add new profile</button></a>
+            <a href="{% url 'display' %}"><button>Liste of profiles</button></a>
+        </div>
+        <a href="{% url 'logout' %}" class="exit">
+            <div class="exit"><img src="{%static "assets/Vector.svg"%}" alt=""></div>
+        </a>
+    </div>
+
+
+    <div class="main-container">
+        <div class="sbar-container">
+            <span>
+                <form action="" method="get">
+                <i class="fa fa-search icon"></i>
+                <input type="text" name="q" class="search-bar" value="{{query}}">
+            </form>
+            </span>
+        </div>
+        <div class="counter">
+            <p>Total nb of ppl in db :{{total}}</p>
+        </div>
+        <div class="screen-container">
+            {% for todo in all_todos %}
+            <div class="display-screen">
+                <p class="displayed-text">
+                    <label>fname:</label>{{ todo.fname }} &nbsp; <label>lname:</label>{{ todo.lname }}<br>
+                    <label>cin:</label>{{ todo.cin }} &nbsp; <label>cne:</label>{{ todo.cen }}<br>
+                    <label>bday:</label> {{ todo.bday }} &nbsp; <label>ismale:</label>{{ todo.ismale }}<br>
+                    <label>phone:</label>{{ todo.phone }} &nbsp; <label>email:</label>{{ todo.email }}<br>
+                    <label>info:</label>{{ todo.info}}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="side-img">
+        <img src="{% static "assets/brow.svg"%}" alt="" class="img">
+    </div>
+</body>
+
+</html>

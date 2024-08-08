@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style_login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="{% static "assets/ico.ico" %}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="title">Neostalker</div>
+    <div class="main-container">
+        <div class="form">
+                <div class="inputs-container">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                    <span>
+                        <i class="fa fa-user icon"></i>
+                        <input type="text" name="username" placeholder="Username" maxlength="20">
+                    </span>
+                    <span>
+                        <i class="fa fa-lock icon"></i>
+                        <input type="password" name="password" id="" placeholder="Password">
+                    </span>
+                        <button class="btn-sbmit" type="submit">Login</button>
+                    </form>
+                </div>
+        </div>
+        <div class="img-container"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static "assets/ico.ico" %}">
+    <link rel="stylesheet" href="{% static 'style_inputs.css' %}">
+    <title>Input</title>
+</head>
+
+<body>
+    <div class="side-bar">
+        <div class="logo"><img src="{% static 'assets/kali.svg' %}" alt="" class="logo"></div>
+        <div class="button-container">
+            <a href="{% url 'input' %}"><button >Add new profile</button></a>
+            <a href="{% url 'display' %}"><button>Liste of profiles</button></a>
+        </div>
+        <a href=" {% url 'login' %}" class="exit">
+            <div class="exit"><img src="{% static 'assets/Vector.svg' %}" alt=""></div>
+        </a>
+    </div>
+    <div class="container">
+        <div class="import">
+            <button class="Excel"><img src="{% static "assets/excel 1.svg" %}" alt="">import excel file</button>
+            <H3>OR</H3>
+        </div>
+        <form method ="post" action="">
+            {% csrf_token %}
+            <div class="inputs-container">
+                <input class="input" type="text" placeholder="First name" name="Firstname">
+                <input class="input" type="text" placeholder="Last name" name="Lastname">
+                <select class="input" name="gender">
+                <option value="2">gender</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+                </select>
+                <input class="input" type="date" name="date">
+                <input class="input" type="email" name="email" placeholder="email">
+                <input class="input" type="tel" name="phone-nbr" placeholder="Phone number">
+                <input class="input" type="text" name="CIN" placeholder="CIN">
+                <input class="input" type="text" name="CNE" placeholder="CNE">
+                <textarea class="input" name="moreinfo" id="minfo" cols="30" rows="10" placeholder="Additional information"></textarea>
+            </div>
+            <button class="submit" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="side-img"><img src="{% static "assets/Server-rafiki 1.svg" %}" alt=""></div>
+</body>
+
+</html>
