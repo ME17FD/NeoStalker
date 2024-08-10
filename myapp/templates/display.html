@@ -45,11 +45,11 @@
             {% for todo in all_todos %}
             <div class="display-screen">
                 <p class="displayed-text">
-                    <label>fname:</label>{{ todo.fname }} &nbsp; <label>lname:</label>{{ todo.lname }}<br>
-                    <label>cin:</label>{{ todo.cin }} &nbsp; <label>cne:</label>{{ todo.cen }}<br>
-                    <label>bday:</label> {{ todo.bday }} &nbsp; <label>ismale:</label>{{ todo.ismale }}<br>
-                    <label>phone:</label>{{ todo.phone }} &nbsp; <label>email:</label>{{ todo.email }}<br>
-                    <label>info:</label>{{ todo.info}}
+                    <label>fname:</label>{{ todo.fname }}  <label>lname:</label>{{ todo.lname }}<br>
+                    <label>cin:</label>{{ todo.cin }}  <label>cne:</label>{{ todo.cen }}<br>
+                    <label>bday:</label> {{ todo.bday }}  <label>ismale:</label>{{ todo.ismale }}<br>
+                    <label>phone:</label>{{ todo.phone }}  <label>email:</label>{{ todo.email }}<br>
+                    <label>info:</label><p>{{ todo.info}}</p>
                 </p>
             </div>
             {% endfor %}
