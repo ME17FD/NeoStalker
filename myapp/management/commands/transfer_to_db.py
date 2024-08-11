@@ -16,7 +16,7 @@ class Command(BaseCommand):
         parser.add_argument(
         "--excel_file",  # Optional argument for the Excel file
         type=str,  # Expecting a string (file path)
-        default="ex.xlsx",  # Default file name/path if not provided
+        default="xlx/ex.xlsx",  # Default file name/path if not provided
         help="Path to the Excel file"
         )
 
