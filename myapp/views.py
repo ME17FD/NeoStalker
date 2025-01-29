@@ -2,7 +2,11 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 from .models import person
+from django.core.files.storage import FileSystemStorage
+import pandas as pd
+from .utils import create_or_update
 
 import hashlib
 logged = False
@@ -92,6 +96,27 @@ def Login(request):
             login(request,user)
             return redirect("display")
     return render(request,'login.html')
+
+def upload_excel(request):
+    if request.method == 'POST' and request.FILES.get('excel_file'):
+        excel_file = request.FILES['excel_file']
+        fs = FileSystemStorage()
+        filename = fs.save(excel_file.name, excel_file)
+        file_path = fs.path(filename)
+        try:
+
+            df = pd.read_excel(file_path)
+            for _, row in df.iterrows():
+                create_or_update(request,row,filename)
+            
+
+        except Exception as e:
+            print(f"Error processing file: {e}")
+        
+        fs.delete(filename)
+        return redirect('input')  # Redirect to input page after upload
+    
+    return render(request, 'inputs.html')
 
 
 def logoutview(request):
