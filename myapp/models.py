@@ -15,7 +15,7 @@ class person(models.Model):
     
     def __str__(self) -> str:
         if self.lname and self.fname: 
-            return self.fname + " " + self.lname
+            return self.fname + " " + self.lname +" " + str(self.cin)        
         elif self.lname:
             return  self.lname
         elif self.fname:

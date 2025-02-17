@@ -1,3 +1,7 @@
 django
 openpyxl
 pandas
+tabula
+tabula-py
+jpype1
+xlrd

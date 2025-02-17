@@ -26,17 +26,17 @@ class Command(BaseCommand):
 
         
         if options.get('delete_old'):
-            delete_list= person.objects.all()
-            nb_dl = 0
-            for to_delete in delete_list:
-                to_delete.delete()
-                nb_dl +=1
+            nb_dl = person.objects.all().count()
+            delete_list= person.objects.all().delete()
+
             print(f'{nb_dl} deleted from database')
+            return
         
         
         # Load data from Excel into a DataFrame
         excel_file = options.get('excel_file')
         df = pd.read_excel(excel_file)
+        df.columns = df.columns.str.lower()
 
         # Initialize a counter for errors
         errors = 0
@@ -45,11 +45,11 @@ class Command(BaseCommand):
         duplicate_c=0
         # Iterate through the rows and process data
         for index, row in df.iterrows():
-            fname = row.get('Nom', '')
-            lname = row.get('Prenom', '')
-            cin = row.get('CIN', '')
-            cne = row.get('CNE', '')
-            info = row.get('INFO', '')
+            fname = row.get('nom', '')
+            lname = row.get('prenom', '')
+            cin = row.get('cin', '')
+            cne = row.get('cne', '')
+            info = row.get('info', '') +'\n'+ str(excel_file).split('\\')[-1]
             email = row.get('email', '')
             
             if not pd.isna(email) and '@' not in email:

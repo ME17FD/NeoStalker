@@ -1,63 +1,75 @@
-
 {% load static %}
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{%static "style_display.css"%}">
-    <link rel="icon" href="{%static "assets/ico.ico"%}">
-    <title>Display</title>
+    <link rel="stylesheet" href="{% static 'style_display.css' %}">
+    <link rel="icon" href="{% static 'assets/ico.ico' %}">
+    <title>Display Profiles</title>
 </head>
-
 <body>
-    <div class="side-bar">
-        <div class="logo"><img src="{%static "assets/kali.svg"%}" alt="" class="logo"></div>
-        <div class="button-container">
-            <a href="{% url 'input' %}"><button >Add new profile</button></a>
-            <a href="{% url 'display' %}"><button>Liste of profiles</button></a>
+    <aside class="side-bar">
+        <div class="logo">
+            <img src="{% static 'assets/kali.svg' %}" alt="Kali Logo" class="logo">
         </div>
-        <a href="{% url 'logout' %}" class="exit">
-            <div class="exit"><img src="{%static "assets/Vector.svg"%}" alt=""></div>
+        <nav class="button-container">
+            <a href="{% url 'input' %}" aria-label="Add new profile"><button>Add new profile</button></a>
+            <a href="{% url 'display' %}" aria-label="List of profiles"><button>List of profiles</button></a>
+        </nav>
+        <a href="{% url 'logout' %}" class="exit" aria-label="Logout">
+            <div class="exit"><img src="{% static 'assets/Vector.svg' %}" alt="Logout Icon"></div>
         </a>
-    </div>
+    </aside>
 
-
-    <div class="main-container">
+    <main class="main-container">
         <div class="sbar-container">
-            <span>
-                <form action="" method="get">
+            <form action="" method="get">
+                <label for="search" class="sr-only">Search</label>
                 <i class="fa fa-search icon"></i>
-                <input type="text" name="q" class="search-bar" value="{{query}}">
+                <input type="text" id="search" name="q" class="search-bar" value="{{ query }}" placeholder="Search...">
             </form>
-            </span>
         </div>
         <div class="counter">
-            <p>Total nb of ppl in db :{{total}}</p>
+            <p>Total number of people in the database: {{ total }}</p>
         </div>
-        <div class="screen-container">
-            {% for todo in all_todos %}
-            <div class="display-screen">
+        <section class="screen-container">
+            {% for todo in page_obj %}
+            <article class="display-screen">
                 <p class="displayed-text">
-                    <label>fname:</label>{{ todo.fname }}  <label>lname:</label>{{ todo.lname }}<br>
-                    <label>cin:</label>{{ todo.cin }}  <label>cne:</label>{{ todo.cen }}<br>
-                    <label>bday:</label> {{ todo.bday }}  <label>ismale:</label>{{ todo.ismale }}<br>
-                    <label>phone:</label>{{ todo.phone }}  <label>email:</label>{{ todo.email }}<br>
-                    <label>info:</label><p>{{ todo.info}}</p>
+                    <label>First Name:</label>{{ todo.fname }}  <label>Last Name:</label>{{ todo.lname }}<br>
+                    <label>CIN:</label>{{ todo.cin }}  <label>CNE:</label>{{ todo.cen }}<br>
+                    <label>Birthday:</label> {{ todo.bday }}  <label>Gender:</label>{{ todo.ismale|yesno:"Male,Female" }}<br>
+                    <label>Phone:</label>{{ todo.phone }}  <label>Email:</label>{{ todo.email }}<br>
+                    <label>Additional Info:</label><p>{{ todo.info }}</p>
                 </p>
-            </div>
+            </article>
             {% endfor %}
+        </section>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&q={{ query }}">« First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}">‹ Previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&q={{ query }}">Next ›</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}">Last »</a>
+                {% endif %}
+            </span>
         </div>
-    </div>
+    </main>
+
     <div class="side-img">
-        <img src="{% static "assets/brow.svg"%}" alt="" class="img">
+        <img src="{% static 'assets/brow.svg' %}" alt="Decorative Image" class="img">
     </div>
 </body>
-
 </html>

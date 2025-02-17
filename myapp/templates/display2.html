@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'style_display2.css' %}">
+    <link rel="icon" href="{% static 'assets/ico.ico' %}">
+    <title>Neostalker</title>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="{% static 'assets/kali.svg' %}" alt="Kali Logo">
+            </div>
+            <nav class="nav">
+                <a href="{% url 'input' %}" class="nav-link">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add New Profile</span>
+                </a>
+                <a href="{% url 'display' %}" class="nav-link">
+                    <i class="fas fa-list"></i>
+                    <span>List of Profiles</span>
+                </a>
+            </nav>
+            <a href="{% url 'logout' %}" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <form action="" method="get" class="search-form">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search" name="q" class="search-input" value="{{ query }}" placeholder="Search...">
+                </form>
+            </div>
+
+            <!-- Counter -->
+            <div class="counter">
+                <p>Total number of people in the database: <strong>{{ total }}</strong></p>
+            </div>
+
+            <!-- Profiles List -->
+            <section class="profiles-grid">
+                {% for todo in page_obj %}
+                <article class="profile-card">
+                    <div class="profile-info">
+                        <p><strong>First Name:</strong> {{ todo.fname }}</p>
+                        <p><strong>Last Name:</strong> {{ todo.lname }}</p>
+                        <p><strong>CIN:</strong> {{ todo.cin }}</p>
+                        <p><strong>CNE:</strong> {{ todo.cen }}</p>
+                        <p><strong>Birthday:</strong> {{ todo.bday }}</p>
+                        <p><strong>Gender:</strong> {{ todo.ismale|yesno:"Male,Female" }}</p>
+                        <p><strong>Phone:</strong> {{ todo.phone }}</p>
+                        <p><strong>Email:</strong> {{ todo.email }}</p>
+                        <p><strong>Additional Info:</strong> {{ todo.info }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&q={{ query }}" class="page-link">« First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&q={{ query }}" class="page-link">‹ Previous</a>
+                {% endif %}
+                <span class="current-page">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&q={{ query }}" class="page-link">Next ›</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}" class="page-link">Last »</a>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Decorative Image -->
+    <div class="decorative-image">
+        <img src="{% static 'assets/brow.svg' %}" alt="Decorative Image">
+    </div>
+</body>
+</html>
