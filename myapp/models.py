@@ -14,12 +14,8 @@ class person(models.Model):
     bday = models.CharField(max_length=21, null=True, blank=True)
     
     def __str__(self) -> str:
-        if self.lname and self.fname: 
-            return self.fname + " " + self.lname +" " + str(self.cin)        
-        elif self.lname:
-            return  self.lname
-        elif self.fname:
-            return self.fname
-        else:
-            return ""
-            
+        full_name = f"{self.fname or ''} {self.lname or ''}".strip()
+        return f"{full_name} ({self.cin})" if self.cin else full_name or "Unnamed Person"
+    class Meta:
+        verbose_name = "Person"
+        verbose_name_plural = "People"     

@@ -9,80 +9,27 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def pdf_to_excel(pdf_file_path, excel_file_path):
+def pdf_to_excel(pdf_file_path):
     try:
-        tables = tabula.read_pdf(pdf_file_path, pages='all', multiple_tables=True,encoding='latin-1') # type: ignore
+        tables = tabula.read_pdf(pdf_file_path, pages='all', multiple_tables=True, encoding='latin-1')  
         
         # Check if any tables were extracted
         if not tables:
             print("No tables found in the PDF.")
-            return
+            return None
         
-        # Write each table to a separate sheet in the Excel file
+        excel_file_path = pdf_file_path + ".xlsx"
         with pd.ExcelWriter(excel_file_path) as writer:
             for i, table in enumerate(tables):
                 if isinstance(table, pd.DataFrame):
                     table.to_excel(writer, sheet_name=f'Sheet{i+1}', index=False)        
         print(f"Excel file saved successfully at {excel_file_path}")
+        return excel_file_path
     
     except Exception as e:
         print(f"An error occurred: {e}")
-"""
-def create_or_update(request,row, filename: str = '') -> None:
-    try:
-        defaults={
-                'ismale': False,
-                'bday': row.get('Date', None),
-                'email': row.get('Email', ''),
-                'phone': row.get('tel', ''),
-                'cin': row.get('CIN', ''),
-                'cen': row.get('CNE', ''),
-                'info': row.get('Info', '') + "\n" + " ".join(str(filename).split(".")[0:-1])
-            }
-        # Check if a person with the same first and last name exists
-        person_obj, created = person.objects.get_or_create(
-            lname=row.get('Nom', '').strip(),
-            fname=row.get('Prenom', '').strip(),
-            defaults=defaults
-        )
-        
-        if created:
-            messages.success(request, f"New person added: {person_obj.fname} {person_obj.lname}")
-            return
-        updated = False
-        if person_obj.bday != defaults['bday'] and defaults['bday']:
-            person_obj.bday = defaults['bday']
-            updated = True
-
-        if person_obj.email != defaults.get('email') and defaults.get('email'):
-            person_obj.email += "\n" + defaults['email']
-            updated = True
-
-        if person_obj.phone != defaults.get('phone') and defaults.get('phone'):
-            person_obj.phone += "\n" + defaults['phone']
-            updated = True
-
-        if person_obj.cin != defaults.get('cin') and defaults.get('cin'):
-            person_obj.cin = defaults['cin']
-            updated = True
-
-        if person_obj.cen != defaults.get('cen') and defaults.get('cen'):
-            person_obj.cen = defaults['cen']
-            updated = True
-        
-        if defaults['info']:
-                if defaults['info'] not in person_obj.info:
-                    person_obj.info += "\n" + defaults['info']
-                    updated = True
-            
-        if updated:
-            person_obj.save()
-            messages.info(request, f"Updated details for {person_obj.fname} {person_obj.lname}")
-
-    except Exception as e:
-        print(f"Error processing row: {e}")
-        messages.error(request, f"Error processing row: {e}")
-  """  
+        return None
+    
 COLUMN_MAPPING = {
     'nom': 'lname',
     'prenom': 'fname',
@@ -201,7 +148,6 @@ def prepare_person_object(row, filename: str) ->  bool|None:
             # Update fields if they have changed
             updated = update_person_fields(person_obj, defaults)
             if updated:
-                print("bout to save")
                 person_obj.save()
     else:
         return None

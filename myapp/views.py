@@ -159,6 +159,46 @@ def upload_excel(request):
     return redirect('input')
 
 
+def upload_pdf(request):
+    """
+    Handles the upload of a PDF file, converts it to Excel, and processes it.
+    """
+    if request.method == 'POST' and request.FILES.get('pdf_file'):
+        pdf_file = request.FILES['pdf_file']
+        
+        # Validate file type and size
+        if not pdf_file.name.endswith('.pdf'):
+            messages.error(request, "Invalid file type. Please upload a .pdf file.")
+            return redirect('input')
+        
+        fs = FileSystemStorage()
+        try:
+            # Save the file temporarily
+            filename = fs.save(pdf_file.name, pdf_file)
+            file_path = fs.path(filename)
+            
+            # Convert PDF to Excel
+            excel_file_path = pdf_to_excel(file_path)
+            if not excel_file_path:
+                print("ha")
+                raise
+            # Process the Excel file (assuming you have a function to process Excel files)
+            process_excel_file(request, excel_file_path, filename.replace('.pdf', '.xlsx'))
+            
+        except Exception as e:
+            logger.error(f"Error processing file: {e}")
+            messages.error(request, f"An error occurred while processing the file: {e}")
+        finally:
+            # Clean up: Delete the temporary files
+            if fs.exists(filename):
+                fs.delete(filename)
+            if excel_file_path and fs.exists(excel_file_path):
+                fs.delete(excel_file_path)
+        
+        return redirect('input')  # Redirect to input page after upload
+    
+    return redirect('input')
+
 def logoutview(request):
     logout(request)
     return redirect('login')
