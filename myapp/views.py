@@ -8,17 +8,18 @@ from django.core.files.storage import FileSystemStorage
 import pandas as pd
 from .utils import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 import logging
 logger = logging.getLogger(__name__)
 
 
 
 logged = False
-# Create your views here.
+
+
+@login_required()  # Redirect to the 'login' URL if not authenticated
 def addscrn(request):
     
-    if not request.user.is_authenticated:
-        return redirect('login')
     done=''
     if request.method == 'POST':
         fname = request.POST['fname']
@@ -53,7 +54,7 @@ def addscrn(request):
     })
 
 
-
+@login_required()  # Redirect to the 'login' URL if not authenticated
 def displayscrn(request):
     empty_name_persons = person.objects.filter(Q(fname__isnull=True) | Q(fname__exact='') | Q(lname__isnull=True) | Q(lname__exact=''))
     # Get the count of objects to be deleted
@@ -67,8 +68,7 @@ def displayscrn(request):
     model_fields = ["fname", "lname", "email", "phone", "cin", "cen","info"]
     
     # Redirect if user is not authenticated
-    if not request.user.is_authenticated:
-        return redirect('login')
+    
     
     # Get the search query
     query = request.GET.get('q', '')
@@ -123,7 +123,7 @@ def Login(request):
             return redirect("display")
     return render(request,'login.html')
 
-
+@login_required() 
 def upload_excel(request):
     """
     Handles the upload of an Excel file, processes it, and updates the database.
@@ -158,7 +158,7 @@ def upload_excel(request):
     
     return redirect('input')
 
-
+@login_required() 
 def upload_pdf(request):
     """
     Handles the upload of a PDF file, converts it to Excel, and processes it.

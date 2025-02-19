@@ -1,0 +1,18 @@
+<nav class="nav">
+    <a href="{% url 'input' %}" class="nav-link">
+        <i class="fas fa-user-plus"></i>
+        <span>Add New Profile</span>
+    </a>
+    <a href="{% url 'display' %}" class="nav-link">
+        <i class="fas fa-list"></i>
+        <span>List of Profiles</span>
+    </a>
+    <a href="{% url 'pdf_to_excel' %}" class="nav-link">
+        <i class="fas fa-file-pdf"></i>
+        <span>PDF to Excel</span>
+    </a>
+    <a href="{% url 'logout' %}" class="logout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+    </a>
+</nav>

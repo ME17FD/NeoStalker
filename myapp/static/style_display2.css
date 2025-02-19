@@ -28,6 +28,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed; /* Make the sidebar fixed */
+    height: 100vh; /* Full height of the viewport */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    z-index: 1000; /* Ensure it stays above other content */
 }
 
 .logo img {
@@ -77,10 +83,12 @@ body {
 
 /* Main Content */
 .main-content {
-    flex: 1;
+    margin-left: 250px; /* Add margin to avoid overlap with the sidebar */
     padding: 20px;
+    width: calc(100% - 250px); /* Adjust width to account for the sidebar */
 }
 
+/* Search Bar */
 .search-container {
     margin-bottom: 20px;
 }
@@ -106,6 +114,7 @@ body {
     font-size: 16px;
 }
 
+/* Counter */
 .counter {
     margin-bottom: 20px;
     font-size: 18px;
@@ -178,4 +187,121 @@ body {
 .decorative-image img {
     width: 300px;
     opacity: 0.1;
+}
+
+/* Upload Page Styles */
+.upload-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-form .form-group {
+    margin-bottom: 15px;
+}
+
+.upload-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.upload-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Columns Page Styles */
+.columns-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.columns-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.columns-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.columns-table th,
+.columns-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.columns-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+}
+
+.columns-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.checkbox {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.rename-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.rename-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn i {
+    margin-right: 8px;
 }

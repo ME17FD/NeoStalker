@@ -1,9 +1,9 @@
 from django.db.models import Q
 from .models import person 
 from django.contrib import messages
-import tabula
 import pandas as pd
 import logging
+import tabula 
 
 
 logger = logging.getLogger(__name__)

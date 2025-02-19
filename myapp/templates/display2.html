@@ -16,20 +16,8 @@
             <div class="logo">
                 <img src="{% static 'assets/kali.svg' %}" alt="Kali Logo">
             </div>
-            <nav class="nav">
-                <a href="{% url 'input' %}" class="nav-link">
-                    <i class="fas fa-user-plus"></i>
-                    <span>Add New Profile</span>
-                </a>
-                <a href="{% url 'display' %}" class="nav-link">
-                    <i class="fas fa-list"></i>
-                    <span>List of Profiles</span>
-                </a>
-            </nav>
-            <a href="{% url 'logout' %}" class="logout">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+            {% include 'nav.html' %}
+            
         </aside>
 
         <!-- Main Content -->

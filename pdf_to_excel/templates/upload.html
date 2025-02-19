@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'style_display2.css' %}">
+    <link rel="icon" href="{% static 'assets/ico.ico' %}">
+    <title>Neostalker - Upload PDF</title>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="{% static 'assets/kali.svg' %}" alt="Kali Logo">
+            </div>
+            {% include 'nav.html' %}
+            
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="upload-container">
+                <h1>Upload PDF</h1>
+                <form method="post" enctype="multipart/form-data" class="upload-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="pdf_file" class="Excel">
+                            <i class="fas fa-file-excel"></i> Choose a PDF file:
+                        </label>
+                        <input type="file" id="pdf_file" name="pdf_file"  accept="application/pdf" hidden onchange="this.form.submit()" required>
+                    </div>
+                    <div class="form-group">
+                        
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Decorative Image -->
+    <div class="decorative-image">
+        <img src="{% static 'assets/brow.svg' %}" alt="Decorative Image">
+    </div>
+</body>
+</html>
